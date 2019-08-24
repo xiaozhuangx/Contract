@@ -14,29 +14,29 @@ contract TrustTravel {
     struct Room {
         string detailAddr;
         string hotel;                // 酒店名
-        string roomType;            // 房间类型
-        string fromDate;            // 入住日期 2018-11-3
+        string roomType;             // 房间类型
+        string fromDate;             // 入住日期 2018-11-3
         string toDate;               // 离开日期 2018-11-5
-        uint totalPrice;            // 总价格     
+        uint totalPrice;             // 总价格     
     }
     
     // 评论信息
     struct Comment {
         uint time;                   //评论时间
-        string content;            //评语
-        uint score;                 //评分
-        bool exist;                 // 判断是否存在
-        string hash;                // 交易hash
+        string content;              //评语
+        uint score;                  //评分
+        bool exist;                  // 判断是否存在
+        string hash;                 // 交易hash
     }
 
     // 用户预订旅游门票
     struct UserSceneOrder {
         uint time;                  //时间戳
-        SceneInfo sceneInfo;     //预定景点信息
+        SceneInfo sceneInfo;        //预定景点信息
         string OTA;                 //预定的平台
-        string state;              //订单状态
+        string state;               //订单状态
         uint flag1;                 //设置整型，定义交易状态
-        Comment comment;          // 评论
+        Comment comment;            // 评论
         string hash;                // 交易hash
     }
 
@@ -44,12 +44,12 @@ contract TrustTravel {
     struct UserOrder {
         uint time;                  // 时间戳 unix
         Room room;                  // 订购房间
-        //SceneInfo sceneInfo;  //预定景点信息
-        string OTA;                // 订购的平台
-        string state;             // 表明订单状态：init/confirmed
-        uint flag;                 //设置整型，定义交易状态
-        Comment comment;         // 评论
-        string hash;              // 交易hash
+        //SceneInfo sceneInfo;      //预定景点信息
+        string OTA;                 // 订购的平台
+        string state;               // 表明订单状态：init/confirmed
+        uint flag;                  //设置整型，定义交易状态
+        Comment comment;            // 评论
+        string hash;                // 交易hash
     }
 
 
@@ -113,12 +113,12 @@ contract TrustTravel {
     /*
     描述：用户登陆。
     参数：
-            username       :        用户名
+            username        :        用户名
             passwd         ：       用户名对应的密码
     返回值：
 
             bool            :        登陆成功或者失败
-            address        :        成功返回用户地址，失败则返回假地址(预设)
+            address         :        成功返回用户地址，失败则返回假地址(预设)
     */
     function UserLogin(string memory username, string passwd) view public returns(bool, string memory, address){
         if (compareStringsbyBytes(Login[username].passwd,passwd)) {
@@ -214,7 +214,7 @@ contract TrustTravel {
     返回值:
             _time          :         订购时间
             _OTA           :         订购平台 
-            _state        ：         订购状态
+            _state         ：         订购状态
             _hash          :         订单hash
     */
     function getUserSceneOrdersInfo(uint _idx, address _addr) public view returns(uint, string memory, string memory, string memory){
@@ -231,12 +231,12 @@ contract TrustTravel {
             _addr          :          用户地址
             _idx           :          订单编号
     返回值：
-            _hotel         :          酒店名
-            _roomType     ：         房间类型
-            _fromDate     ：         入住时间
-            _toDate       ：         离店时间
-            _totalPrice  ：         房间价格
-            _detailAddr  ：         酒店详细地址
+            _hotel          :          酒店名
+            _roomType      ：         房间类型
+            _fromDate      ：         入住时间
+            _toDate        ：         离店时间
+            _totalPrice    ：         房间价格
+            _detailAddr    ：         酒店详细地址
     */
     function getUserOrdersRoom(uint _idx, address _addr) public view returns (string memory, string memory, string memory, string memory, uint, string memory){
         string storage _hotel = userInfo[_addr].orders[_idx].room.hotel;
@@ -264,10 +264,10 @@ contract TrustTravel {
             _addr             :        用户地址
             _idx              :        订单编号
     返回值：
-            _content         :        评价内容
+            _content          :        评价内容
             _hash             :        评论订单hash值
             _score            :        评分
-            _commentTime    :        评论时间
+            _commentTime      :        评论时间
     */
     function getUserOrdersComment(uint _idx, address _addr) public view returns (bool, string memory, uint, uint, string memory){
         bool  _exist =   userInfo[ _addr].orders[_idx].comment.exist;
@@ -284,12 +284,12 @@ contract TrustTravel {
     描述：获得景点评论
     参数： 
             _addr             :        用户地址
-            _idx               :        订单编号
+            _idx              :        订单编号
     返回值：
-            _content         :        评价内容
+            _content          :        评价内容
             _hash             :        评论订单hash值
             _score            :        评分
-            _commentTime    :        评论时间
+            _commentTime      :        评论时间
     */
     function getUserSceneOrdersComment(uint _idx, address _addr) public view returns (bool, string memory, uint, uint, string memory){
         bool  _exist =   userInfo[ _addr].orders1[_idx].comment.exist;
